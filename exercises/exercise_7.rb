@@ -11,6 +11,8 @@ puts "----------"
 
 # Exercise 7: Validations for both models
 
+# 0. Add validations to the Employee and Store models
+
 # 1. Ask the user for a store name
 print "Please enter a new store name: "
 store_name = gets.chomp

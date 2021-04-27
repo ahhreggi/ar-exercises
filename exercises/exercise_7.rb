@@ -9,11 +9,27 @@ require_relative './exercise_6'
 puts "Exercise 7"
 puts "----------"
 
-# 1. Add data into employees
-@store1 = Store.find_by(id: 1)
-@store1.employees.create(first_name: "Khurram", last_name: "Virani", hourly_rate: 60)
-@store1.employees.create(first_name: "Willy", last_name: "Wonka", hourly_rate: 60)
-@store1.employees.create(first_name: "Milly", last_name: "Monka", hourly_rate: 60)
-@store2 = Store.find_by(id: 2)
-@store2.employees.create(first_name: "Jane", last_name: "Doe", hourly_rate: 100)
-@store2.employees.create(first_name: "John", last_name: "Doe", hourly_rate: 80)
+# Exercise 7: Validations for both models
+
+# 1. Ask the user for a store name
+print "Please enter a new store name: "
+store_name = gets.chomp
+
+# 2. Attempt to create a store with the inputted name but leave out the other fields
+# (annual_revenue, mens_apparel, and womens_apparel)
+
+# @new_store = Store.create(name: store_name)
+# => Error: annual_revenue: ["can't be blank", "is not a number"]
+
+# @new_store = Store.create(name: store_name, annual_revenue: -1)
+# => Error: annual_revenue: ["must be greater than or equal to 0"]
+
+@new_store = Store.create(name: store_name, annual_revenue: 100000, mens_apparel: false, womens_apparel: false)
+# => Error: mens_apparel: ["Must carry at least one of either mens or womens apparel"]
+#    Error: womens_apparel: ["Must carry at least one of either mens or womens apparel"]
+
+# 3. Display the error messages provided back from ActiveRecord to the user (one on each line)
+# after you attempt to save/create the record
+@new_store.errors.messages.each do |column, error|
+  puts "Error: #{column}: #{error}"
+end
